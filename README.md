@@ -7,7 +7,7 @@ A collection of helper scripts for system and application setup.
 ## Usage
 
 ```bash
-brew tap icelab/bootstrap
+brew tap Birdsnest/devtools
 brew bootstrap-system # or any other command
 ```
 
