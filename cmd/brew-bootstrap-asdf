@@ -48,7 +48,13 @@ EOF
   bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 fi
 
-asdf install
+(
+  for var_override in $( env | grep -E '^ASDF_INSTALL_VAR_[^=]+=' ); do
+    var="${var_override#ASDF_INSTALL_VAR_}"
+    export "${var}=${!var_override@Q}"
+  done
+  asdf install
+)
 
 if [ ! -z "$(grep ruby .tool-versions)" ]; then
   (asdf which bundle &>/dev/null && bundle -v &>/dev/null) || {
