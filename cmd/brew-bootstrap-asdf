@@ -20,8 +20,6 @@ cleanup() {
   if [ -z "$PRINT_DEBUG" ]; then
     warn "For debugging output run:"
     warn "  $0 --debug"
-    warn "If you're stuck: file an issue with debugging output at:"
-    warn "  https://github.com/icelab/homebrew-bootstrap/issues/new"
   fi
 }
 trap "cleanup" EXIT
