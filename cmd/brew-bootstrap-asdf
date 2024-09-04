@@ -56,7 +56,7 @@ fi
 
 if [ ! -z "$(grep ruby .tool-versions)" ]; then
   (asdf which bundle &>/dev/null && bundle -v &>/dev/null) || {
-    gem install bundler
+    asdf env ruby gem install bundler
   }
 fi
 
