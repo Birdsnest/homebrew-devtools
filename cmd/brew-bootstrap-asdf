@@ -24,14 +24,20 @@ cleanup() {
 }
 trap "cleanup" EXIT
 
+log_step() {
+  echo "==> $1"
+}
+
+log_step "Checking if asdf is installed..."
 if ! which asdf &>/dev/null; then
   abort "Error: you need to 'brew install asdf'!"
 fi
-
+log_step "Checking for .tool-versions file..."
 if [ ! -f .tool-versions ]; then
   abort "Error: you need a '.tool-versions' file to install packages"
 fi
 
+log_step "Reading plugins from .tool-versions..."
 for plugin in $(cat .tool-versions | awk '{print $1}'); do
   if [ -z $(asdf plugin list | grep $plugin) ]; then
     asdf plugin add $plugin
@@ -39,25 +45,34 @@ for plugin in $(cat .tool-versions | awk '{print $1}'); do
 done
 
 if [ ! -z "$(grep nodejs .tool-versions)" ]; then
+  log_step "Setting up Node.js dependencies..."
   brew bundle --file=- <<EOF
 brew "gpg"
 EOF
 
   bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 fi
-
+log_step "Installing package versions with asdf..."
 (
   for var_override in $( env | grep -E '^ASDF_INSTALL_VAR_[^=]+=' ); do
     var="${var_override#ASDF_INSTALL_VAR_}"
     export "${var}=${!var_override@Q}"
   done
-  asdf install
+  asdf install || abort "asdf install failed!"
 )
 
 if [ ! -z "$(grep ruby .tool-versions)" ]; then
   (asdf which bundle &>/dev/null && bundle -v &>/dev/null) || {
-    asdf env ruby gem install bundler
+    asdf exec ruby -S gem install bundler
   }
+fi
+
+if grep -q ruby .tool-versions; then
+  log_step "Checking Ruby bundler installation..."
+  if ! asdf which bundle &>/dev/null || ! bundle -v &>/dev/null; then
+    log_step "Installing bundler for Ruby..."
+    asdf exec ruby -S gem install bundler || abort "Bundler installation failed!"
+  fi
 fi
 
 EXPECTED_EXIT="1"
