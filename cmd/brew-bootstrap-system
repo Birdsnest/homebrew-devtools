@@ -28,11 +28,11 @@ echo "OK"
 
 # Install/bootstrap standard asdf plugins
 echo "Installing standard asdf plugins…"
-if [ -z "$(asdf plugin-list | grep ruby)" ]; then
-  asdf plugin-add ruby
+if [ -z "$(asdf plugin list | grep ruby)" ]; then
+  asdf plugin add ruby
 fi
-if [ -z "$(asdf plugin-list | grep nodejs)" ]; then
-  asdf plugin-add nodejs
+if [ -z "$(asdf plugin list | grep nodejs)" ]; then
+  asdf plugin add nodejs
 fi
 bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 echo "OK"
