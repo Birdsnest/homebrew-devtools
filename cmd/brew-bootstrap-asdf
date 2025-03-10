@@ -62,17 +62,10 @@ log_step "Installing package versions with asdf..."
 )
 
 if [ ! -z "$(grep ruby .tool-versions)" ]; then
+  log_step "Checking Ruby bundler installation..."
   (asdf which bundle &>/dev/null && bundle -v &>/dev/null) || {
     asdf exec ruby -S gem install bundler
   }
-fi
-
-if grep -q ruby .tool-versions; then
-  log_step "Checking Ruby bundler installation..."
-  if ! asdf which bundle &>/dev/null || ! bundle -v &>/dev/null; then
-    log_step "Installing bundler for Ruby..."
-    asdf exec ruby -S gem install bundler || abort "Bundler installation failed!"
-  fi
 fi
 
 EXPECTED_EXIT="1"
