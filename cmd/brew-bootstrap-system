@@ -37,6 +37,14 @@ fi
 bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 echo "OK"
 
+# Install Ruby with OpenSSL and Readline support
+if grep -q ruby ~/.tool-versions; then
+  echo "Installing Ruby with OpenSSL and Readline support..."
+  RUBY_CONFIGURE_OPTS="--with-readline-dir=/usr/include/readline --with-openssl-dir=/usr/lib/x86_64-linux-gnu"
+  asdf install ruby
+  echo "Ruby installation complete."
+fi
+
 # Switch to zsh (but only if the user is on a standard bash shell)
 if [ ! -z "$(dscl . -read /Users/$USER UserShell | grep /bin/bash)" ]; then
   echo "Switching shell to zsh…"

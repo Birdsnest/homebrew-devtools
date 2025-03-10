@@ -68,8 +68,9 @@ if [ ! -z "$(grep ruby .tool-versions)" ]; then
   }
 
   log_step "Installing Ruby with OpenSSL and Readline support..."
-  RUBY_CONFIGURE_OPTS="--with-readline-dir=/usr/include/readline --with-openssl-dir=/usr/lib/x86_64-linux-gnu" 
-  asdf install ruby 2.7.7
+  RUBY_CONFIGURE_OPTS="--with-readline-dir=/usr/include/readline --with-openssl-dir=/usr/lib/x86_64-linux-gnu"
+  asdf install ruby
+  log_step "Ruby installation complete."
 fi
 
 EXPECTED_EXIT="1"
