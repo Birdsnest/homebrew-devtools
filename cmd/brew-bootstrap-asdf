@@ -66,11 +66,6 @@ if [ ! -z "$(grep ruby .tool-versions)" ]; then
   (asdf which bundle &>/dev/null && bundle -v &>/dev/null) || {
     asdf exec ruby -S gem install bundler
   }
-
-  log_step "Installing Ruby with OpenSSL and Readline support..."
-  RUBY_CONFIGURE_OPTS="--with-readline-dir=/usr/include/readline --with-openssl-dir=/usr/lib/x86_64-linux-gnu"
-  asdf install ruby
-  log_step "Ruby installation complete."
 fi
 
 EXPECTED_EXIT="1"
