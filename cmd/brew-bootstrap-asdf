@@ -25,7 +25,9 @@ cleanup() {
 trap "cleanup" EXIT
 
 log_step() {
-  echo "==> $1"
+  if [ "x$PRINT_DEBUG" = "x1" ]; then
+    echo "==> $1"
+  fi
 }
 
 log_step "Checking if asdf is installed..."
