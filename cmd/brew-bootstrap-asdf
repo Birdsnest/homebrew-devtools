@@ -52,7 +52,6 @@ if [ ! -z "$(grep nodejs .tool-versions)" ]; then
 brew "gpg"
 EOF
 
-  bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 fi
 log_step "Installing package versions with asdf..."
 (
