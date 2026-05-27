@@ -34,7 +34,6 @@ fi
 if [ -z "$(asdf plugin list | grep nodejs)" ]; then
   asdf plugin add nodejs
 fi
-bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
 echo "OK"
 
 # Switch to zsh (but only if the user is on a standard bash shell)
