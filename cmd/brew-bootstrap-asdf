@@ -59,6 +59,8 @@ log_step "Installing package versions with asdf..."
     var="${var_override#ASDF_INSTALL_VAR_}"
     export "${var}=${!var_override}"
   done
+  openssl_prefix="$(brew --prefix openssl)"
+  export RUBY_CONFIGURE_OPTS="--with-openssl-dir=${openssl_prefix}"
   asdf install
 )
 
