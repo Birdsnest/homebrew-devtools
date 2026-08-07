@@ -55,10 +55,12 @@ EOF
 fi
 log_step "Installing package versions with asdf..."
 (
-  for var_override in $( env | grep -E '^ASDF_INSTALL_VAR_[^=]+=' ); do
+  for var_override in $( env | grep -E '^ASDF_INSTALL_VAR_[^=]+=' | cut -d= -f1 ); do
     var="${var_override#ASDF_INSTALL_VAR_}"
-    export "${var}=${!var_override@Q}"
+    export "${var}=${!var_override}"
   done
+  openssl_prefix="$(brew --prefix openssl)"
+  export RUBY_CONFIGURE_OPTS="--with-openssl-dir=${openssl_prefix}"
   asdf install
 )
 
